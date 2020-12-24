@@ -32,7 +32,7 @@ defmodule CaptainHookSignature.MixProject do
   end
 
   defp description() do
-    "CaptainHook signature following Stripe’s specification."
+    "CaptainHook signature. It follows the Stripe’s specification about signature."
   end
 
   defp package() do

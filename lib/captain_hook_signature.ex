@@ -3,7 +3,7 @@ defmodule CaptainHookSignature do
   `CaptainHookSignature`.
   """
   @schema "v1"
-  @default_valid_period_in_seconds 300
+  @default_valid_period_in_seconds 5 * 60
 
   @spec sign(binary, integer, binary | [binary]) :: binary
   def sign(payload, timestamp, secret) when is_binary(payload) do
