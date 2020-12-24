@@ -48,7 +48,7 @@ defmodule CaptainHookSignature.Plug.HTTPSignature do
         |> put_resp_content_type("application/json")
         |> send_resp(
           Plug.Conn.Status.code(:bad_request),
-          "{\"errors\": {\"detail\": \"HTTP Signature is invalid: #{error}\"}}"
+          Jason.encode!(%{errors: %{detail: "HTTP Signature is invalid: #{error}"}})
         )
         |> halt()
     end

@@ -14,7 +14,7 @@ The package can be installed by adding `captain_hook_signature` to your list of 
 ```elixir
 def deps do
   [
-    {:captain_hook_signature, "~> 0.1.0"}
+    {:captain_hook_signature, "~> 0.2.0"}
   ]
 end
 ```

@@ -34,9 +34,11 @@ defmodule CaptainHookSignature.Plug.HTTPSignatureTest do
       |> HTTPSignature.call(HTTPSignature.init(secret: "a-secret", system: FakeSystem))
 
     assert conn.halted
+    assert Plug.Conn.get_resp_header(conn, "content-type") == ["application/json; charset=utf-8"]
+    assert {:ok, _} = Jason.decode(conn.resp_body)
 
     assert conn.resp_body ==
-             "{\"errors\": {\"detail\": \"HTTP Signature is invalid: signature is not present in header \"Signature\"\"}}"
+             "{\"errors\":{\"detail\":\"HTTP Signature is invalid: signature is not present in header \\\"Signature\\\"\"}}"
   end
 
   test "when the raw_body is missing, raises a RawBodyNotPresentError exception" do
@@ -76,7 +78,7 @@ defmodule CaptainHookSignature.Plug.HTTPSignatureTest do
     assert conn.status == Plug.Conn.Status.code(:bad_request)
 
     assert conn.resp_body ==
-             "{\"errors\": {\"detail\": \"HTTP Signature is invalid: signature is incorrect\"}}"
+             "{\"errors\":{\"detail\":\"HTTP Signature is invalid: signature is incorrect\"}}"
   end
 
   test "support secret to be a function/1" do
