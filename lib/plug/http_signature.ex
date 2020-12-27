@@ -22,7 +22,7 @@ defmodule CaptainHookSignature.Plug.HTTPSignature do
   import Plug.Conn
 
   @behaviour Plug
-  @signature_header_name "Signature"
+  @signature_header_name "signature"
 
   @impl true
   @spec init(keyword) :: keyword

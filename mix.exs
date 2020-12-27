@@ -2,7 +2,7 @@ defmodule CaptainHookSignature.MixProject do
   use Mix.Project
 
   @source_url "https://github.com/annatel/captain_hook_signature"
-  @version "0.2.0"
+  @version "0.3.0"
 
   def project do
     [

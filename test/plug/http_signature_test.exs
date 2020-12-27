@@ -19,7 +19,7 @@ defmodule CaptainHookSignature.Plug.HTTPSignatureTest do
       conn(:post, "/", "{\"data\": \"a-sample-payload\"}")
       |> cache_raw_body()
       |> put_req_header(
-        "Signature",
+        "signature",
         "t=1595960507,v1=10f65f2a9dfc9325b59109e7ee631ea11c419457f0b292299c770b137393b0ce"
       )
       |> HTTPSignature.call(HTTPSignature.init(secret: "a-secret", system: FakeSystem))
@@ -38,14 +38,14 @@ defmodule CaptainHookSignature.Plug.HTTPSignatureTest do
     assert {:ok, _} = Jason.decode(conn.resp_body)
 
     assert conn.resp_body ==
-             "{\"errors\":{\"detail\":\"HTTP Signature is invalid: signature is not present in header \\\"Signature\\\"\"}}"
+             "{\"errors\":{\"detail\":\"HTTP Signature is invalid: signature is not present in header \\\"signature\\\"\"}}"
   end
 
   test "when the raw_body is missing, raises a RawBodyNotPresentError exception" do
     assert_raise HTTPSignature.RawBodyNotPresentError, fn ->
       conn(:post, "/", "{\"data\": \"a-sample-payload\"}")
       |> put_req_header(
-        "Signature",
+        "signature",
         "t=1595960507,v1=10f65f2a9dfc9325b59109e7ee631ea11c419457f0b292299c770b137393b0ce"
       )
       |> HTTPSignature.call(HTTPSignature.init(secret: "a-secret", system: FakeSystem))
@@ -57,7 +57,7 @@ defmodule CaptainHookSignature.Plug.HTTPSignatureTest do
       conn(:post, "/", "{\"data\": \"a-sample-payload\"}")
       |> cache_raw_body()
       |> put_req_header(
-        "Signature",
+        "signature",
         "t=1595960507,v1=10f65f2a9dfc9325b59109e7ee631ea11c419457f0b292299c770b137393b0ce"
       )
       |> HTTPSignature.call(HTTPSignature.init(system: FakeSystem))
@@ -69,7 +69,7 @@ defmodule CaptainHookSignature.Plug.HTTPSignatureTest do
       conn(:post, "/", "{\"data\": \"a-sample-payload\"}")
       |> cache_raw_body()
       |> put_req_header(
-        "Signature",
+        "signature",
         "t=1595960507,v1=a-wrong-signature"
       )
       |> HTTPSignature.call(HTTPSignature.init(secret: "a-secret", system: FakeSystem))
@@ -88,7 +88,7 @@ defmodule CaptainHookSignature.Plug.HTTPSignatureTest do
       conn(:post, "/", "{\"data\": \"a-sample-payload\"}")
       |> cache_raw_body()
       |> put_req_header(
-        "Signature",
+        "signature",
         "t=1595960507,v1=10f65f2a9dfc9325b59109e7ee631ea11c419457f0b292299c770b137393b0ce"
       )
       |> HTTPSignature.call(HTTPSignature.init(secret: secret, system: FakeSystem))
@@ -101,14 +101,14 @@ defmodule CaptainHookSignature.Plug.HTTPSignatureTest do
       conn(:post, "/", "{\"data\": \"a-sample-payload\"}")
       |> cache_raw_body()
       |> put_req_header(
-        "signature",
+        "Signature",
         "t=1595960507,v1=10f65f2a9dfc9325b59109e7ee631ea11c419457f0b292299c770b137393b0ce"
       )
       |> HTTPSignature.call(
         HTTPSignature.init(
           secret: "a-secret",
           system: FakeSystem,
-          signature_header_name: "signature"
+          signature_header_name: "Signature"
         )
       )
 
