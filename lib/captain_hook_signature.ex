@@ -43,7 +43,7 @@ defmodule CaptainHookSignature do
   end
 
   defp hash(payload, timestamp, secret) do
-    :crypto.hmac(:sha256, secret, "#{timestamp}.#{payload}")
+    :crypto.mac(:hmac, :sha256, secret, "#{timestamp}.#{payload}")
     |> Base.encode16(case: :lower)
   end
 
