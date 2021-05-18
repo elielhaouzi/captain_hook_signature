@@ -2,7 +2,7 @@ defmodule CaptainHookSignature.MixProject do
   use Mix.Project
 
   @source_url "https://github.com/annatel/captain_hook_signature"
-  @version "0.4.0"
+  @version "0.4.1"
 
   def project do
     [
@@ -28,7 +28,7 @@ defmodule CaptainHookSignature.MixProject do
       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
       {:jason, "~> 1.2"},
       {:plug_cowboy, "~> 2.2"},
-      {:plug_crypto, "~> 1.1"}
+      {:plug_crypto, "~> 1.0"}
     ]
   end
 
