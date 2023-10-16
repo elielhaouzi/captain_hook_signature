@@ -14,10 +14,9 @@ The package can be installed by adding `captain_hook_signature` to your list of 
 ```elixir
 def deps do
   [
-    {:captain_hook_signature, "~> 0.4.1"}
+    {:captain_hook_signature, "~> 0.5"}
   ]
 end
 ```
 
 The docs can be found at [https://hexdocs.pm/captain_hook_signature](https://hexdocs.pm/captain_hook_signature).
-
