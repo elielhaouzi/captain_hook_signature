@@ -2,18 +2,7 @@
 # https://github.com/dashbitco/bytepack_archive/blob/main/apps/bytepack_web/lib/bytepack_web/controllers/webhooks/http_signature.ex
 defmodule CaptainHookSignature.Plug.HTTPSignature do
   @moduledoc """
-  Verifies the request body in order to ensure that its signature is valid.
-  This verification can avoid someone to send a request on behalf of our client.
-
-  So the client must send a header with the following structure:
-      t=timestamp-in-seconds,
-      v1=signature
-
-  Where the `timestamp-in-seconds` is the system time in seconds, and `signature`
-  is the HMAC using the SHA256 algorithm of timestamp and the payload, signed by
-  a shared secret with us.
-
-  This is based on what Stripe is doing: https://stripe.com/docs/webhooks/signatures
+  `CaptainHookSignature.Plug.HTTPSignature`.
   """
   defmodule RawBodyNotPresentError do
     defexception message: "raw body is not available"
@@ -27,6 +16,7 @@ defmodule CaptainHookSignature.Plug.HTTPSignature do
   @impl true
   @spec init(keyword) :: keyword
   def init(opts) do
+    Keyword.fetch!(opts, :module)
     Keyword.fetch!(opts, :secret)
 
     opts
@@ -35,11 +25,12 @@ defmodule CaptainHookSignature.Plug.HTTPSignature do
   @impl true
   @spec call(Plug.Conn.t(), keyword) :: Plug.Conn.t()
   def call(conn, opts) do
+    module = Keyword.fetch!(opts, :module)
     signature_header_name = Keyword.get(opts, :signature_header_name, @signature_header_name)
 
     with {:ok, header} <- signature_header(conn, signature_header_name),
          {:ok, body} <- raw_body(conn),
-         :ok <- CaptainHookSignature.verify(header, body, fetch_secret!(conn, opts), opts) do
+         :ok <- module.verify(header, body, fetch_secret!(conn, opts), opts) do
       conn
     else
       {:error, error} ->

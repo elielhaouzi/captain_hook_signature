@@ -1,14 +1,14 @@
 defmodule CaptainHookSignature.MixProject do
   use Mix.Project
 
-  @source_url "https://github.com/annatel/captain_hook_signature"
-  @version "0.5.0"
+  @source_url "https://github.com/elielhaouzi/captain_hook_signature"
+  @version "0.6.0"
 
   def project do
     [
       app: :captain_hook_signature,
       version: @version,
-      elixir: "~> 1.9",
+      elixir: "~> 1.14",
       start_permanent: Mix.env() == :prod,
       description: description(),
       package: package(),
