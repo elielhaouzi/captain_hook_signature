@@ -27,6 +27,7 @@ defmodule CaptainHookSignature.Plug.HTTPSignature do
   def call(conn, opts) do
     module = Keyword.fetch!(opts, :module)
     signature_header_name = Keyword.get(opts, :signature_header_name, @signature_header_name)
+    opts = opts |> Keyword.put(:conn, conn)
 
     with {:ok, header} <- signature_header(conn, signature_header_name),
          {:ok, body} <- raw_body(conn),
